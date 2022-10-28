@@ -1,0 +1,42 @@
+{
+  "name": "Goobi viewer Desktop Client",
+  "author": "",
+  "version": "1.0.0",
+  "description": "Desktop client that integrates into the Goobi viewer access restriction functionallity",
+  "main": "src/javascript/main.js",
+  "icon": "assets/icons/app_128.png",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "build": {
+  	"appId": "io.goobi.viewer.client.desktop",
+  	"win": {
+	  	"iconUrl": "./assets/icons/app_128.png"
+  	}
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "electron": "^18.0.0"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "fnv-plus": "^1.3.1",
+    "systeminformation": "^5.11.9",
+    "i18next": "*",
+    "i18next-node-fs-backend": "*",
+    "rxjs": "^7.5.5",
+    "custom-electron-titlebar": "^4.1.0"
+  },
+  "config": {
+    "forge": "./src/configs/forge-config.js"
+  }
+}

@@ -1,0 +1,38 @@
+body {
+	margin: 0 6px;
+	font-family: sans-serif;
+}
+
+.titlebar {
+	display: flex;
+	justify-content: space-between;
+}
+
+.titlebar__menu {
+	display: flex;
+}
+
+.titlebar__menu__item {
+	padding: 4px 12px 4px 4px;
+	user-select: none;
+}
+
+.titlebar__menu__item.-active {
+	background-color: lightgray;
+}
+
+
+.titlebar__loader {
+	height: 30px;
+}
+
+.titlebar__loader .loader {
+	height: 100%;
+	margin: -2px 6px 0 0;
+	display: none;
+}
+
+.titlebar__loader .loader.-active {
+	display: block;
+}
+

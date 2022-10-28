@@ -1,0 +1,12 @@
+{
+  "de": "Deutsch",
+  "en": "English",
+  "menu__language": "Sprache",
+  "menu__file": "Datei",
+  "menu__close_app": "Beenden",
+  "menu__help": "Hilfe",
+  "menu__about": "Über den Client",
+  "menu__devtools": "Entwicklerwerkzeuge",
+  "about__title": "Goobi viewer Desktop Client",
+  "about__text": "Dieser Client kann an eine Goobi viewer Installation angebunden werden und integriert sich dort in die Funktionalität der Zugriffsbeschränkungen. \n\nEntwickelt von intranda GmbH"
+}
