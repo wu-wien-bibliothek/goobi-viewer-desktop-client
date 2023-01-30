@@ -41,11 +41,13 @@ app.whenReady()
 .then( hash => maybePrintHashAndClose(hash))
 .then( hash => createWindow(hash))
 .catch(e => {
-	if(e == "_quit") {
-		app.quit();
-	} else {
-		console.log(e);
-	}
+	if(e.action == "printHash") {
+			process.stdout.write(e.hash);
+			app.quit();
+		} else {
+			console.log(e.action);
+			app.quit();
+		}
 });
 
 //quit
@@ -54,6 +56,12 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
+app.on('before-quit', () => {
+	BrowserWindow.getAllWindows().forEach(win => {
+		win.close();
+	})
+});
 
 //startin point when app is brought to the foreground again in maxOS
 app.on('activate', () => {
@@ -75,8 +83,7 @@ app.on('activate', () => {
 function maybePrintHashAndClose(hash) {
 	var arguments = process.argv.slice(1);
 	if(arguments.length > 0 && arguments[0].toLowerCase() == "myid") {
-		process.stdout.write(hash);
-		throw("_quit");
+		throw({action: "printHash", hash:hash});
 	}
 	return hash;
 }
