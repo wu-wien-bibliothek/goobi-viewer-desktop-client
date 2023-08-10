@@ -29,7 +29,6 @@ const i18n = require('../configs/i18next.config.js');
 const config = require('../configs/app.config');
 
 	module.exports = function initMenu(settings, name) {
-
 		let menu = buildMenu(settings, name);
 
 		return menu;
@@ -59,9 +58,7 @@ const config = require('../configs/app.config');
 			label: i18n.t("menu__print"),
 			click: () => {
 				let win = BrowserWindow.getFocusedWindow();
-				console.log("win", win);
 				let view = win.getBrowserView();
-				console.log("view", view);
 				view.webContents.print({
 					silent: false,
 					header: "Printed from " + config.viewerUrl,

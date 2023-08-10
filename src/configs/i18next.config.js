@@ -25,7 +25,7 @@ This file initializes the translation bundles for the application
  
 const i18n = require('i18next');
 const path = require('path');
-const i18nextBackend = require('i18next-node-fs-backend');
+const i18nextBackend = require('i18next-fs-backend');
 const config = require('../configs/app.config');
 
 const i18nextOptions = {

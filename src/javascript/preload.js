@@ -25,12 +25,7 @@
  This is running in the frontend-thread. Communication with background main thread is done via ipcRenderer events
  **/
 
-
-const config = require('../configs/app.config');
-const i18n = require('../configs/i18next.config.js');
-const path = require('path');
-const { Menu, MenuItem, dialog } = require('electron');
-const { contextBridge, ipcRenderer } = require("electron");
+const { ipcRenderer } = require("electron");
 
 //after html is loaded
 window.addEventListener('DOMContentLoaded', () => {
