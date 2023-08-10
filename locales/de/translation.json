@@ -8,5 +8,6 @@
   "menu__about": "Über den Client",
   "menu__devtools": "Entwicklerwerkzeuge",
   "about__title": "Goobi viewer Desktop Client",
-  "about__text": "Dieser Client kann an eine Goobi viewer Installation angebunden werden und integriert sich dort in die Funktionalität der Zugriffsbeschränkungen. \n\nEntwickelt von intranda GmbH"
+  "about__text": "Dieser Client kann an eine Goobi viewer Installation angebunden werden und integriert sich dort in die Funktionalität der Zugriffsbeschränkungen. \n\nEntwickelt von intranda GmbH",
+  "menu__print": "Drucken..."
 }

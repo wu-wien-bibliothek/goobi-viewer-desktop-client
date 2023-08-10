@@ -24,10 +24,10 @@
  If the string 'file' or 'help' is passed as a second parameter, only the submenu for that menu entry is returned
  **/
 
-const { Menu, MenuItem, dialog } = require('electron');
+const { Menu, MenuItem, dialog, BrowserWindow } = require('electron');
 const i18n = require('../configs/i18next.config.js');
 const config = require('../configs/app.config');
-	
+
 	module.exports = function initMenu(settings, name) {
 
 		let menu = buildMenu(settings, name);
@@ -36,7 +36,6 @@ const config = require('../configs/app.config');
 	}
 	
 	function buildMenu(settings, name) {
-
 		const closeMenu = {
 			label: i18n.t("menu__close_app"),
 			role: "quit"
@@ -56,6 +55,28 @@ const config = require('../configs/app.config');
 			}
 		}
 		
+		const printMenu = {
+			label: i18n.t("menu__print"),
+			click: () => {
+				let win = BrowserWindow.getFocusedWindow();
+				console.log("win", win);
+				let view = win.getBrowserView();
+				console.log("view", view);
+				view.webContents.print({
+					silent: false,
+					header: "Printed from " + config.viewerUrl,
+					footer: "Printed by Goobi viewer desktop client"
+				},
+				(success, error) => {
+					if(success) {
+						console.log("Printed webpage successfully");
+					} else {
+						console.error("Error printint", error);
+					}
+				}); 
+			}
+		}
+		
 		const devMenu = {
 			label: i18n.t("menu__devtools"),
 			role: "toggleDevTools"
@@ -68,12 +89,16 @@ const config = require('../configs/app.config');
 		const helpMenu = {
 			label: i18n.t("menu__help"),
 			submenu: [infoMenu]
-			//submenu: [infoMenu, devMenu]
+//			submenu: [infoMenu, devMenu]
 		}
 		
 		const menuTemplate = [fileMenu,helpMenu];
 		
-
+		//allow printing web content
+		if(config.allowPrint) {
+			fileMenu.submenu.push(printMenu);
+		}
+		
 		if(name) {
 			switch(name) {
 				case "file":
@@ -82,7 +107,6 @@ const config = require('../configs/app.config');
 					return Menu.buildFromTemplate(helpMenu.submenu);
 			}
 		}
-
 		
 		let menu = Menu.buildFromTemplate(menuTemplate);
 	

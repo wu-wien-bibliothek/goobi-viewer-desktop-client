@@ -7,5 +7,6 @@
   "menu__help": "Help",
   "menu__about": "About this Client",
   "menu__devtools": "Developer tools",
-  "about__text": "This client can be connected to a Goobi viewer installation and integrates with the access restriction functionality. \n\nDeveloped by intranda GmbH"
+  "about__text": "This client can be connected to a Goobi viewer installation and integrates with the access restriction functionality. \n\nDeveloped by intranda GmbH",
+  "menu__print": "Print..."
 }

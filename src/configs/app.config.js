@@ -30,7 +30,7 @@ module.exports = {
   /**
   The URL of the web page to navigate to at startup. Generally the base URL of a Goobi viewer 
   **/
-  viewerUrl: "https://viewer.example.org",
+  viewerUrl: "https://digital.zlb.de/viewer/",
   /**
   The languages available for menu options. 
   Each language requires a file locales/{language}/translation.json with the required translations to work
@@ -43,5 +43,9 @@ module.exports = {
   /**
   The image within the assets/icons folder to use as the application icon
   **/
-  icon: "64.png"
+  icon: "64.png",
+  /**
+   * If set to true, a menu option is added which prints the browser content
+   */
+  allowPrint: false
 };
