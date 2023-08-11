@@ -73,6 +73,19 @@ const config = require('../configs/app.config');
 				}); 
 			}
 		}
+		const startMenu = {
+			label: i18n.t("menu__start"),
+			click: (event) => {
+				view.webContents.goToIndex(0);
+			}
+		}
+		const prevMenu = {
+			label: i18n.t("menu__prev"),
+			click: (event) => {
+				let view = BrowserWindow.getFocusedWindow().getBrowserView();
+				view.webContents.goBack();
+			}
+		}
 		
 		const devMenu = {
 			label: i18n.t("menu__devtools"),
@@ -88,6 +101,10 @@ const config = require('../configs/app.config');
 			submenu: [infoMenu]
 //			submenu: [infoMenu, devMenu]
 		}
+		const navMenu = {
+			label: i18n.t("menu__navigation"),
+			submenu: [prevMenu, startMenu]
+		}
 		
 		const menuTemplate = [fileMenu,helpMenu];
 		
@@ -102,6 +119,8 @@ const config = require('../configs/app.config');
 					return Menu.buildFromTemplate(fileMenu.submenu);
 				case "help":
 					return Menu.buildFromTemplate(helpMenu.submenu);
+				case "navigation":
+					return Menu.buildFromTemplate(navMenu.submenu);					
 			}
 		}
 		

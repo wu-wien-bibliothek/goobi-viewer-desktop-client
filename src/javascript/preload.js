@@ -28,11 +28,12 @@
 const { ipcRenderer } = require("electron");
 
 //after html is loaded
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => {	
 	translateMenuItems();
 	ipcRenderer.on('change-language', () => translateMenuItems());
 	handleMenuItemClicks();
 	initLoaderEvents();
+
 });
 
 //show/hide loader when 'update-loader' is sent from backend 

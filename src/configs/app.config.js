@@ -30,7 +30,7 @@ module.exports = {
   /**
   The URL of the web page to navigate to at startup. Generally the base URL of a Goobi viewer 
   **/
-  viewerUrl: "https://digital.zlb.de/viewer/",
+  viewerUrl: "https://example.com/viewer/",
   /**
   The languages available for menu options. 
   Each language requires a file locales/{language}/translation.json with the required translations to work

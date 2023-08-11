@@ -63,7 +63,7 @@ module.exports = async function createWindow (machineId) {
       contextIsolation: false
     }
   })
-	
+
 	//hide default menu. We build our own
     win.removeMenu();
 
@@ -79,7 +79,25 @@ module.exports = async function createWindow (machineId) {
   	win.on("resize", () => setTimeout(() => setViewBounds(win, view), 0));
 
 	//load the viewer URL
-  	view.webContents.loadURL(config.viewerUrl)
+  	view.webContents.loadURL(config.viewerUrl);
+  	
+  	//Handle opening a new window when clicking on a link with a target attribute
+  	win.getBrowserView().webContents.setWindowOpenHandler(({url}) => {
+	  return { 
+		  action: 'allow',
+		  overrideBrowserWindowOptions: {
+			icon: getIconPath(config.icon),
+		    title: config.title,
+		    frame: true,
+		    autoHideMenuBar: true,
+			webPreferences: {
+		      nodeIntegration: false,
+		      contextIsolation: false,
+		    }
+		  }
+	   };
+  });
+
   
 }
 
@@ -129,6 +147,10 @@ function initContentProtection(win, view, machineId) {
 //initialize listeners to events with the browser
 function initWebListeners(win) {
 
+  const pdfFilter = {
+	  urls:["*://*/*.pdf"]
+  }
+
   let loading = false;
   
   let startRequestObservable = rxjs.Observable.create( observer => win.webContents.session.webRequest.onBeforeRequest( (details, callback) => {
@@ -146,6 +168,20 @@ function initWebListeners(win) {
   		}
   	})
   );
+  
+    let pdfHeaderReceivedObservable = rxjs.Observable.create( observer => win.webContents.session.webRequest.onHeadersReceived( pdfFilter, (details, callback) => {
+			observer.next({details: details, callback: callback});
+	 })
+   );
+
+
+   pdfHeaderReceivedObservable
+   .subscribe( ({details, callback}) => {
+//	   console.log("pdf request", details);
+    	details.responseHeaders["Content-Disposition"] = details.responseHeaders["Content-Disposition"][0].replace("attachment", "inline");
+//    	console.log("modified pdf request", details);
+    	callback(details);
+   });
   
   startRequestObservable
   .subscribe( details => {
