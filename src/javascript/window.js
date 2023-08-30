@@ -77,7 +77,8 @@ module.exports = async function createWindow (machineId, url, hasParent) {
 		//only register renderer events for first window
 		initRendererEvents(win);
 	}
-  	initContentProtection(win, view, machineId);
+	  
+	initContentProtection(win, view, machineId);
 	
 	//set the browser view within the main window and position it
   	win.setBrowserView(view);
@@ -91,7 +92,9 @@ module.exports = async function createWindow (machineId, url, hasParent) {
   	
   	//Handle opening a new window when clicking on a link with a target attribute
   	win.getBrowserView().webContents.setWindowOpenHandler(({url}) => {  
-		url = url + "#toolbar=0";
+		if(!config.allowPrint) {
+			url = url + "#toolbar=0";
+		}
 		createWindow(machineId, url, true);  
 	  	return { action: 'deny' };
   });

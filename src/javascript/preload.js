@@ -33,7 +33,6 @@ window.addEventListener('DOMContentLoaded', () => {
 	ipcRenderer.on('change-language', () => translateMenuItems());
 	handleMenuItemClicks();
 	initLoaderEvents();
-
 });
 
 //show/hide loader when 'update-loader' is sent from backend 
