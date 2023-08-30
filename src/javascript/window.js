@@ -1,4 +1,4 @@
-/*
+s/*
  * This file is part of the Goobi viewer - a content presentation and management
  * application for digitized objects.
  *
@@ -38,10 +38,11 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 const TITLEBAR_HEIGHT = 25; // px
 
 
-module.exports = async function createWindow (machineId) {
+module.exports = async function createWindow (machineId, url, hasParent) {
 
   console.log("viewer client config: ", config);
   console.log("viewer client machine Id: ", machineId);
+  console.log("url to open ", url);
 
   //main application window containing the menu bar and browser view
   const win = new BrowserWindow({
@@ -69,7 +70,10 @@ module.exports = async function createWindow (machineId) {
 
     //init event listeners now and in this order to correctly initialize languages on first page
 	initWebListeners(win);
-	initRendererEvents(win);
+	if(!hasParent) {		
+		//only register renderer events for first window
+		initRendererEvents(win);
+	}
   	initContentProtection(win, view, machineId);
 	
 	//set the browser view within the main window and position it
@@ -79,23 +83,12 @@ module.exports = async function createWindow (machineId) {
   	win.on("resize", () => setTimeout(() => setViewBounds(win, view), 0));
 
 	//load the viewer URL
-  	view.webContents.loadURL(config.viewerUrl);
+  	view.webContents.loadURL(url ? url : config.viewerUrl);
   	
   	//Handle opening a new window when clicking on a link with a target attribute
   	win.getBrowserView().webContents.setWindowOpenHandler(({url}) => {
-	  return { 
-		  action: 'allow',
-		  overrideBrowserWindowOptions: {
-			icon: getIconPath(config.icon),
-		    title: config.title,
-		    frame: true,
-		    autoHideMenuBar: true,
-			webPreferences: {
-		      nodeIntegration: false,
-		      contextIsolation: false,
-		    }
-		  }
-	   };
+		createWindow(machineId, url, true);  
+	  	return { action: 'deny' };
   });
 
   
@@ -148,7 +141,7 @@ function initContentProtection(win, view, machineId) {
 function initWebListeners(win) {
 
   const pdfFilter = {
-	  urls:["*://*/*.pdf"]
+	  urls:["*://*/*.pdf", "*://*/*/pdf", "*://*/*/pdf/", "*://*/*/pdf/?*", "*://*/*/pdf?*"]
   }
 
   let loading = false;
@@ -161,6 +154,7 @@ function initWebListeners(win) {
   		callback({cancel: false});
   	})
   );
+
   let completeRequestObservable = rxjs.Observable.create( observer => win.webContents.session.webRequest.onCompleted( (details) => {
   		if(loading && isHtml(details)) {
 	  		observer.next(details);
@@ -170,17 +164,17 @@ function initWebListeners(win) {
   );
   
     let pdfHeaderReceivedObservable = rxjs.Observable.create( observer => win.webContents.session.webRequest.onHeadersReceived( pdfFilter, (details, callback) => {
-			observer.next({details: details, callback: callback});
+		observer.next({details: details, callback: callback});
 	 })
    );
 
 
    pdfHeaderReceivedObservable
    .subscribe( ({details, callback}) => {
-//	   console.log("pdf request", details);
-    	details.responseHeaders["Content-Disposition"] = details.responseHeaders["Content-Disposition"][0].replace("attachment", "inline");
-//    	console.log("modified pdf request", details);
-    	callback(details);
+	   if(details.responseHeaders && details.responseHeaders["Content-Disposition"]) {		   
+	    	details.responseHeaders["Content-Disposition"] = details.responseHeaders["Content-Disposition"][0].replace("attachment", "inline");
+	   }
+	   callback(details);
    });
   
   startRequestObservable
