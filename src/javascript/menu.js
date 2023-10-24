@@ -30,16 +30,19 @@ const config = require('../configs/app.config');
 
 	module.exports = function initMenu(settings, name) {
 		let menu = buildMenu(settings, name);
-
-		return menu;
+		
+		let win = BrowserWindow.getFocusedWindow();
+		let view = win.getBrowserView();
+		
+		return {win: win, view: view, menu:menu};
 	}
 	
 	function buildMenu(settings, name) {
 		const closeMenu = {
 			label: i18n.t("menu__close_app"),
-			role: "quit"
+			role: "close"
 		}
-
+		
 		const infoMenu = {
 			label: i18n.t("menu__about"),
 			click: () => {

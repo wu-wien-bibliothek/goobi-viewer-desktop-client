@@ -76,6 +76,9 @@ module.exports = async function createWindow (machineId, url, hasParent) {
 		initWebListeners(win);
 		//only register renderer events for first window
 		initRendererEvents(win);
+		win.windowName = "main";
+	} else {
+		win.windowName = "pdf";
 	}
 	  
 	initContentProtection(win, view, machineId);
@@ -111,9 +114,9 @@ function setViewBounds(win, view) {
 //initializes communication with preload.js in the frontend thread
 function initRendererEvents(win) {
   ipcMain.handle('get-menu', (event, x,y,menuName) => {
-		let menu = buildMenu({icons: {app:getIconPath(config.icon)}}, menuName);
-	    menu.popup({
-	    	window: win,
+		let menuConfig = buildMenu({icons: {app:getIconPath(config.icon)}}, menuName);
+	    menuConfig.menu.popup({
+	    	window: menuConfig.win,
 	    	x: x,
 	    	y: TITLEBAR_HEIGHT
 	    });
