@@ -44,7 +44,7 @@ module.exports = {
         {
           "name": "@electron-forge/maker-deb",
           "config": {
-          	"name": "goobi_viewer_desktop"          	
+          	"name": "Goobi_Viewer_Desktop-Client"          	
           }
         }
       ]
