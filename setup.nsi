@@ -14,7 +14,7 @@
 #
 # ###############################################################
 
-Name "Goobi Viewer Desktop Client"
+Name "Goobi-Viewer-Desktop-Client"
 
 SetCompressor lzma
 

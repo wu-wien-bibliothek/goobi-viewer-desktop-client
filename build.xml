@@ -8,9 +8,15 @@
 	<property name="output-dir" value="out" />
 	<property name="installer-icon" value="assets/icons/app_32.ico" />
 	<property name="make-result-path" value="out/make/deb/x64/" />
-
+	<property name="source-config" value="src/configs" />
 	
 	<taskdef name="nsis" classname="com.danielreese.nsisant.Task" classpath="${nsisant-path}" />
+	
+	<target name="installer-zlb" description="Build windows installer for https://digital.zlb.de/viewer">
+		<setconfig config="configs/zlb"/>
+		<antcall target="installer-windows"/>
+		<antcall target="cleanup"/>
+	</target>
 	
 	<target name="installer" description="Build installer for windows and linux systems">
 		<antcall target="installer-linux"></antcall>
@@ -55,6 +61,19 @@
 				<arg value="package"/>
 				<arg value="--platform=win32"/>
 			</exec>
-		</target>
+	</target>
 
+	<target name="cleanup" description="Replaces files changed by another target with the original values">
+		<setconfig config="configs/default"/>
+	</target>
+	
+	<macrodef name="setconfig" description="Replaces the default configuration files in 'src/configs' with the files from the folder specified in ${config-folder}">
+		<attribute name="config"/>
+		<sequential>
+			<copy todir="${source-config}" flatten="false" overwrite="true" verbose="true">
+		  		<fileset dir="@{config}"/>
+		  	</copy>
+		</sequential>
+	</macrodef>
+	
 </project>
