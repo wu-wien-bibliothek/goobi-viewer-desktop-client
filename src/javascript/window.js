@@ -60,12 +60,18 @@ module.exports = async function createWindow (machineId, url, hasParent) {
 	  preload: path.join(__dirname, "preload.js") // use a preload script
     }
   })
+  
   //browser view in which the viewer is loaded
-  let view = new BrowserView({
-  	webPreferences: {
+  const browserViewWebPreferences = {
       nodeIntegration: false,
-      contextIsolation: false
-    }
+      contextIsolation: false,
+  }
+  if(hasParent) {
+  	browserViewWebPreferences.preload = path.join(__dirname, "pdf-preload.js");
+  }
+  
+  let view = new BrowserView({
+  	webPreferences: browserViewWebPreferences
   })
 
 	//hide default menu. We build our own
@@ -80,6 +86,7 @@ module.exports = async function createWindow (machineId, url, hasParent) {
 	} else {
 		win.windowName = "pdf";
 	}
+	//view.webContents.openDevTools();
 	  
 	initContentProtection(win, view, machineId);
 	
@@ -130,6 +137,7 @@ function initRendererEvents(win) {
 
 //apply protections against capturing content of the application
 function initContentProtection(win, view, machineId) {
+    
   view.webContents.on('before-input-event', (event, input) => {
     if (input.control && (input.key.toLowerCase() === 'c' || input.key.toLowerCase() === 'x')) {
       console.log('Tried to copy or paste')
