@@ -102,7 +102,10 @@ module.exports = async function createWindow (machineId, url, hasParent) {
   	
   	//Handle opening a new window when clicking on a link with a target attribute
   	win.getBrowserView().webContents.setWindowOpenHandler(({url}) => {  
-		if(!config.allowPrint) {
+  		console.log("open window", url);
+  		if(config.epubViewUrl && url.endsWith(".epub")) {
+  			url = config.epubViewUrl.replace("{epubUrl}", url);
+  		} else if(!config.allowPrint) {
 			url = url + "#toolbar=0";
 		}
 		createWindow(machineId, url, true);  

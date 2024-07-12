@@ -32,6 +32,10 @@ module.exports = {
   **/
   viewerUrl: "https://digital.zlb.de/viewer/index/",
   /**
+  URL to open when loading an epub-document. The term '{epubUrl}' is replaced by the actual url of the epub document that was attempted to load
+  **/
+  epubViewUrl: "https://digital.zlb.de/viewer/epub/?url={epubUrl}",
+  /**
   The languages available for menu options. 
   Each language requires a file locales/{language}/translation.json with the required translations to work
   **/
