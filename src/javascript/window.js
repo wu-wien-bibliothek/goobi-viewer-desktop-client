@@ -52,7 +52,7 @@ module.exports = async function createWindow (machineId, url, hasParent) {
     width: 800,
     height: 600,
     icon: getIconPath(config.icon),
-    title: config.title,
+    title: i18n.t(config.title),
     frame: true,
 	webPreferences: {
       nodeIntegration: false,
@@ -61,21 +61,23 @@ module.exports = async function createWindow (machineId, url, hasParent) {
     }
   })
   
-  //browser view in which the viewer is loaded
-  const browserViewWebPreferences = {
-      nodeIntegration: false,
-      contextIsolation: false,
-  }
-  if(hasParent) {
-  	browserViewWebPreferences.preload = path.join(__dirname, "pdf-preload.js");
-  }
+	//browser view in which the viewer is loaded
+	const browserViewWebPreferences = {
+		nodeIntegration: false,
+		contextIsolation: false,
+	}
+	if(hasParent) {
+		browserViewWebPreferences.preload = path.join(__dirname, "pdf-preload.js");
+	}
   
-  let view = new BrowserView({
-  	webPreferences: browserViewWebPreferences
-  })
+	let view = new BrowserView({
+		webPreferences: browserViewWebPreferences
+	})
 
 	//hide default menu. We build our own
     win.removeMenu();
+
+
 
     //init event listeners now and in this order to correctly initialize languages on first page
 	if(!hasParent) {		
@@ -125,11 +127,16 @@ function setViewBounds(win, view) {
 function initRendererEvents(win) {
   ipcMain.handle('get-menu', (event, x,y,menuName) => {
 		let menuConfig = buildMenu({icons: {app:getIconPath(config.icon)}}, menuName);
-	    menuConfig.menu.popup({
-	    	window: menuConfig.win,
-	    	x: x,
-	    	y: TITLEBAR_HEIGHT
-	    });
+		if(menuConfig.menu.popup) {
+			menuConfig.menu.popup({
+				window: menuConfig.win,
+				x: x,
+				y: TITLEBAR_HEIGHT
+			});
+		} else if(menuConfig.menu.click) {
+			menuConfig.menu.click();
+		}
+
 	});
 	
 	ipcMain.handle("translate", (event, key) => {
@@ -152,10 +159,17 @@ function initContentProtection(win, view, machineId) {
   
   view.webContents.session.webRequest.onBeforeSendHeaders((details, callback) => {
     const requestHeaders = {...details.requestHeaders, ...{
-        ['X-goobi-content-protection']: machineId
+        ['X-goobi-content-protection']: machineId,
+		['Accept-Language']: getLanguages()
     }};
     callback({cancel: false, requestHeaders})
   });
+}
+
+function getLanguages() {
+	let defaultLang = config.fallbackLng;
+	let langauges = config.languages.sort((a,b) => a == defaultLang ? -1 : (b == defaultLang ? 1 : 0)).join(",");
+	return langauges;
 }
 
 //initialize listeners to events with the browser
@@ -163,6 +177,7 @@ function initWebListeners(win) {
 
   let loading = false;
   
+
   
   let startRequestObservable = rxjs.Observable.create( observer => win.webContents.session.webRequest.onBeforeRequest( (details, callback) => {
   		if(!loading && isHtml(details)) {

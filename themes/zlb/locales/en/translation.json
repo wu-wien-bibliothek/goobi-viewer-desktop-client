@@ -1,0 +1,17 @@
+{
+  "de": "German",
+  "en": "English",
+  "app_title": "Virtual reading room of the Landesbibliothek Berlin",
+  "menu__language": "Language",
+  "menu__file": "File",
+  "menu__close_app": "Quit",
+  "menu__help": "Help",
+  "menu__about": "About this Client",
+  "menu__devtools": "Developer tools",
+  "about__title": "Virtual reading room of the Berlin State Library",
+  "about__text": "In the Zentral- und Landesbibliothek Berlin you will find all publications published in Berlin. This includes all electronic publications since the end of March 2024 (enactment of the ordinance amending the Pflichtexemplargesetz). Many of these publications are subject to usage restrictions and are therefore only available in our Virtual Reading Room at the Landesbibliothek Berlin. Please understand that they cannot be copied and sent. It is possible to print extracts.",
+  "menu__print": "Print...",
+  "menu__navigation": "Navigation",
+  "menu__prev": "Back",
+  "menu__start": "Starting page"
+}

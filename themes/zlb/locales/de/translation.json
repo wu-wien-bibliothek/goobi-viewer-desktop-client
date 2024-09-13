@@ -1,0 +1,17 @@
+{
+  "de": "Deutsch",
+  "en": "English",
+  "app_title": "Virtueller Lesesaal der Landesbibliothek Berlin",
+  "menu__language": "Sprache",
+  "menu__file": "Datei",
+  "menu__close_app": "Beenden",
+  "menu__help": "Hilfe",
+  "menu__about": "Über den Client",
+  "menu__devtools": "Entwicklerwerkzeuge",
+  "about__title": "Virtueller Lesesaal der Landesbibliothek Berlin",
+  "about__text": "In der Zentral- und Landesbibliothek Berlin finden Sie alle in Berlin erschienen Publikationen. Das schließt seit Ende März 2024 (Erlass der Verordnung zur Novelle des Pflichtexemplargesetzes) alle elektronischen Publikationen mit ein. Viele dieser Publikationen unterliegen Nutzungsbeschränkungen und sind daher ausschließlich in unserem Virtuellen Lesesaal der Landesbibliothek Berlin verfügbar. Bitte haben Sie Verständnis dafür, dass diese nicht kopiert und versendet werden können. Ausdrucken ist in Auszügen möglich.",
+  "menu__print": "Drucken...",
+  "menu__navigation": "Navigation",
+  "menu__prev": "Zurück",
+  "menu__start": "Startseite"
+}

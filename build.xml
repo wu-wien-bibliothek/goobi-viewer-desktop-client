@@ -1,6 +1,6 @@
 <project name="goobi-viewer-desktop" default="installer">
 
-	<property name="version" value="1.2" />
+	<property name="version" value="1.2.2" />
 	<property name="installer-name" value="Goobi-viewer-Desktop-Client" />
 	<property name="nsisant-path" value="lib-build/nsisant-1.3.jar" />
 	<property name="nsis-path" value="/usr/bin/" />
@@ -8,12 +8,14 @@
 	<property name="output-dir" value="out" />
 	<property name="installer-icon" value="assets/icons/app_32.ico" />
 	<property name="make-result-path" value="out/make/deb/x64/" />
-	<property name="source-config" value="src/configs" />
+	<property name="config-path" value="src/configs" />
+	<property name="locales-path" value="locales" />
+	<property name="icons-path" value="assets/icons" />
 	
 	<taskdef name="nsis" classname="com.danielreese.nsisant.Task" classpath="${nsisant-path}" />
 	
 	<target name="installer-zlb" description="Build windows installer for https://digital.zlb.de/viewer">
-		<setconfig config="configs/zlb"/>
+		<settheme theme="themes/zlb"/>
 		<antcall target="installer-windows"/>
 		<antcall target="cleanup"/>
 	</target>
@@ -64,15 +66,21 @@
 	</target>
 
 	<target name="cleanup" description="Replaces files changed by another target with the original values">
-		<setconfig config="configs/default"/>
+		<settheme theme="themes/default"/>
 	</target>
 	
-	<macrodef name="setconfig" description="Replaces the default configuration files in 'src/configs' with the files from the folder specified in ${config-folder}">
-		<attribute name="config"/>
+	<macrodef name="settheme" description="Replaces the default configuration files in 'src/configs' and 'locales' with the files from the folder specified in ${theme}">
+		<attribute name="theme"/>
 		<sequential>
-			<copy todir="${source-config}" flatten="false" overwrite="true" verbose="true">
-		  		<fileset dir="@{config}"/>
+			<copy todir="${config-path}" flatten="false" overwrite="true" verbose="true">
+		  		<fileset dir="@{theme}/config"/>
 		  	</copy>
+			<copy todir="${locales-path}" flatten="false" overwrite="true" verbose="true">
+				<fileset dir="@{theme}/locales"/>
+			</copy>
+			<copy todir="${icons-path}" flatten="false" overwrite="true" verbose="true">
+				<fileset dir="@{theme}/icons"/>
+			</copy>
 		</sequential>
 	</macrodef>
 	

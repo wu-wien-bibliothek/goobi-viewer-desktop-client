@@ -27,6 +27,7 @@
 const { Menu, MenuItem, dialog, BrowserWindow } = require('electron');
 const i18n = require('../configs/i18next.config.js');
 const config = require('../configs/app.config');
+const path = require('path');
 
 	module.exports = function initMenu(settings, name) {
 		let menu = buildMenu(settings, name);
@@ -40,7 +41,7 @@ const config = require('../configs/app.config');
 	function buildMenu(settings, name) {
 		const closeMenu = {
 			label: i18n.t("menu__close_app"),
-			role: "close"
+			click: () => BrowserWindow.getFocusedWindow().close()
 		}
 		
 		const infoMenu = {
@@ -48,7 +49,7 @@ const config = require('../configs/app.config');
 			click: () => {
 				let options = {
 					type: "info",
-					icon: settings.icons.app,
+					icon: getIconPath(config.icon),
 					buttons: [],
 					message: i18n.t("about__title"),
 					detail: i18n.t("about__text") 
@@ -109,7 +110,7 @@ const config = require('../configs/app.config');
 			submenu: [prevMenu, startMenu]
 		}
 		
-		const menuTemplate = [fileMenu,helpMenu];
+		const menuTemplate = [closeMenu, infoMenu];
 		
 		//allow printing web content
 		if(config.allowPrint) {
@@ -118,6 +119,10 @@ const config = require('../configs/app.config');
 		
 		if(name) {
 			switch(name) {
+				case "close":
+					return new MenuItem(closeMenu);
+				case "info":
+					return new MenuItem(infoMenu);
 				case "file":
 					return Menu.buildFromTemplate(fileMenu.submenu);
 				case "help":
@@ -147,4 +152,8 @@ const config = require('../configs/app.config');
 		    submenu: languageMenu
 		  }));
 		return menu;
+}
+
+function getIconPath(icon) {
+	return path.join(__dirname, '../../assets/icons', icon)
 }

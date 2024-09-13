@@ -1,7 +1,7 @@
 {
   "name": "Goobi-viewer-Desktop-Client",
   "author": "",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Desktop client that integrates into the Goobi viewer access restriction functionallity",
   "main": "src/javascript/main.js",
   "icon": "assets/icons/app_128.png",

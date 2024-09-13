@@ -26,7 +26,7 @@ module.exports = {
   /**
   The title of the application to be displayed in the title bar
   **/
-  title: "Goobi viewer Desktop Client",
+  title: "app_title",
   /**
   The URL of the web page to navigate to at startup. Generally the base URL of a Goobi viewer 
   **/
@@ -47,7 +47,7 @@ module.exports = {
   /**
   The image within the assets/icons folder to use as the application icon
   **/
-  icon: "64.png",
+  icon: "favicon-46x46.png",
   /**
    * If set to true, a menu option is added which prints the browser content
    */
