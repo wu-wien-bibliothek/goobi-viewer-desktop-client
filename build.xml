@@ -2,10 +2,10 @@
 
 	<property name="version" value="1.3.0" />
 	<property name="installer-name" value="Goobi-viewer-Desktop-Client" />
-	<property name="nsisant-path" value="lib-build/nsisant-1.3.jar" />
-	<property name="nsis-path" value="/usr/bin/" />
 	<property name="product-name" value="Goobi-viewer-Desktop-Client" />
 	<property name="output-dir" value="out" />
+	<property name="nsisant-path" value="lib-build/nsisant-1.3.jar" />
+	<property name="nsis-path" value="/usr/bin/" />
 	<property name="installer-icon" value="assets/icons/app_32.ico" />
 	<property name="make-result-path" value="out/make/deb/x64/" />
 	<property name="config-path" value="src/configs" />
@@ -28,7 +28,7 @@
 	<target name="installer" description="Build installer for windows and linux systems">
 		<antcall target="installer-linux"></antcall>
 		<antcall target="installer-windows">
-			<param name="product" value="${product-path}"/>
+			<param name="product" value="${product-name}"/>
 			<param name="installer" value="${installer-name}"/>
 		</antcall>
 	</target>
