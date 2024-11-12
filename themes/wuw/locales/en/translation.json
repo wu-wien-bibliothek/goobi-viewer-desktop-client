@@ -1,0 +1,15 @@
+{
+  "de": "Deutsch",
+  "en": "English",
+  "menu__language": "Language",
+  "menu__file": "File",
+  "menu__close_app": "Quit",
+  "menu__help": "Help",
+  "menu__about": "About this Client",
+  "menu__devtools": "Developer tools",
+  "about__text": "This client can be connected to a Goobi viewer installation and integrates with the access restriction functionality. \n\nDeveloped by intranda GmbH",
+  "menu__print": "Print...",
+  "menu__navigation": "Navigation",
+  "menu__prev": "Back",
+  "menu__start": "Starting page"
+}
