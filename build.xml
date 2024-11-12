@@ -15,12 +15,12 @@
 	
 	<taskdef name="nsis" classname="com.danielreese.nsisant.Task" classpath="${nsisant-path}" />
 	
-	<target name="installer-zlb" description="Build windows installer for https://digital.zlb.de/viewer">
-		<settheme theme="themes/zlb"/>
-		<echo message="Building NSIS installer for ZLB..." />
+	<target name="installer-wuw" description="Build windows installer for https://viewer.wu.ac.at/viewer">
+		<settheme theme="themes/wuw"/>
+		<echo message="Building NSIS installer for WUW..." />
 		<antcall target="installer-windows">
-			<param name="product" value="Virtueller Lesesaal der Landesbibliothek Berlin"/>
-			<param name="installer" value="Virtueller Lesesaal der Landesbibliothek Berlin"/>
+			<param name="product" value="Virtueller Lesesaal der Wirtschaftsuniversität Wien"/>
+			<param name="installer" value="Virtueller Lesesaal der Wirtschaftsuniversität Wien"/>
 		</antcall>
 		<antcall target="cleanup"/>
 	</target>
